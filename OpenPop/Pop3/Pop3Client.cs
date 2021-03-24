@@ -195,13 +195,12 @@ namespace OpenPop.Pop3
 			if (State != ConnectionState.Disconnected)
 				throw new InvalidUseException("You cannot ask to connect to a POP3 server, when we are already connected to one. Disconnect first.");
 
-			TcpClient clientSocket = new TcpClient(AddressFamily.InterNetworkV6);
-			clientSocket.ReceiveTimeout = receiveTimeout;
-			clientSocket.SendTimeout = sendTimeout;
-
+			TcpClient clientSocket = null;
 			try
 			{
-				clientSocket.Connect(hostname, port);
+				clientSocket = new TcpClient(hostname, port);
+			clientSocket.ReceiveTimeout = receiveTimeout;
+			clientSocket.SendTimeout = sendTimeout;				
 			}
 			catch (SocketException e)
 			{
